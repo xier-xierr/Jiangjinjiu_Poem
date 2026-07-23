@@ -1,1 +1,343 @@
 
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>將進酒 · 李白</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&display=swap');
+
+  :root{
+    --sky-top:#060811;
+    --sky-mid:#0e1526;
+    --sky-bottom:#161c30;
+    --ink:#efe4c9;
+    --moon:#f6e6b0;
+    --moon-glow:#ffdf8f;
+    --wine:#9c3324;
+    --wine-light:#d97a3f;
+    --gold:#c9a24b;
+    --mountain:#080b14;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--sky-bottom);
+    color:var(--ink);
+    font-family:"Noto Serif TC","PMingLiU","STSong",serif;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--wine-light);color:#fff;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    height:100svh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 55%,var(--sky-bottom) 100%);
+  }
+  .stars{
+    position:absolute;inset:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20% 30%, #fff8 50%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 70% 20%, #fff9 50%, transparent 100%),
+      radial-gradient(1px 1px at 40% 60%, #fff7 50%, transparent 100%),
+      radial-gradient(1px 1px at 85% 45%, #fff6 50%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 80%, #fff7 50%, transparent 100%),
+      radial-gradient(1px 1px at 10% 75%, #fff6 50%, transparent 100%),
+      radial-gradient(1px 1px at 90% 85%, #fff6 50%, transparent 100%);
+    animation:twinkle 6s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{from{opacity:.5}to{opacity:1}}
+
+  .moon{
+    position:absolute;
+    top:12%;left:50%;
+    width:min(34vw,220px);
+    aspect-ratio:1/1;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff8dc, var(--moon) 60%, var(--moon-glow) 100%);
+    box-shadow:0 0 60px 18px rgba(255,223,143,.35), 0 0 140px 60px rgba(255,223,143,.12);
+  }
+
+  .mountains{
+    position:absolute;bottom:0;left:0;right:0;height:38%;
+    background:var(--mountain);
+    clip-path:polygon(
+      0% 100%, 0% 70%, 8% 55%, 15% 68%, 24% 40%, 32% 62%,
+      40% 48%, 50% 66%, 58% 38%, 68% 60%, 76% 45%, 85% 64%,
+      93% 50%, 100% 66%, 100% 100%
+    );
+    opacity:.9;
+  }
+
+  .hero-content{
+    position:relative;z-index:2;
+    text-align:center;
+    padding:0 1.25rem;
+  }
+  .eyebrow{
+    letter-spacing:.5em;
+    font-size:.75rem;
+    color:var(--gold);
+    margin:0 0 1rem;
+    padding-left:.5em;
+  }
+  .hero h1{
+    margin:0;
+    font-weight:900;
+    font-size:clamp(3.2rem,14vw,6rem);
+    letter-spacing:.15em;
+    text-shadow:0 0 40px rgba(255,223,143,.25);
+  }
+  .byline{
+    margin:.75rem 0 2rem;
+    font-size:1rem;
+    letter-spacing:.3em;
+    color:#cfc4a3;
+  }
+  .tagline{
+    font-size:clamp(1rem,3.6vw,1.25rem);
+    color:var(--ink);
+    line-height:2;
+    margin:0 0 3rem;
+  }
+  .hint{
+    font-size:.85rem;
+    color:#a89a72;
+    letter-spacing:.2em;
+    animation:bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(8px);opacity:1}}
+
+  /* ---------- PINNED SCROLL SECTION ---------- */
+  .pin-wrap{
+    position:relative;
+    background:var(--sky-bottom);
+  }
+  .pin{
+    position:sticky;
+    top:0;
+    height:100svh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(201,162,75,.10), transparent 60%),
+      var(--sky-bottom);
+  }
+
+  .track{
+    display:flex;
+    align-items:center;
+    padding:0 8vw;
+    will-change:transform;
+  }
+  .col{
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    flex:0 0 auto;
+    margin:0 1.4rem;
+    padding:1.6rem 0;
+    font-size:clamp(1.25rem,3.4vw,1.7rem);
+    letter-spacing:.4em;
+    line-height:2.1;
+    color:var(--ink);
+    opacity:.14;
+    transform:translateY(14px);
+    transition:opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1), text-shadow .9s ease;
+    border-right:1px solid rgba(239,228,201,.08);
+  }
+  .col:first-child{border-right:none;}
+  .col.gap{margin-left:4.4rem;}
+  .col.active{
+    opacity:1;
+    transform:translateY(0);
+    text-shadow:0 0 18px rgba(255,223,143,.18);
+  }
+
+  .cup-wrap{
+    position:absolute;
+    left:6vw;
+    bottom:8vh;
+    width:min(18vw,96px);
+    z-index:3;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,.5));
+  }
+  #liquid{
+    transition:height .25s linear, y .25s linear;
+  }
+  .cup-label{
+    position:absolute;
+    left:6vw;
+    bottom:calc(8vh + min(18vw,96px) + .6rem);
+    font-size:.7rem;
+    letter-spacing:.3em;
+    color:#a89a72;
+  }
+
+  /* ---------- FINALE ---------- */
+  .finale{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:3rem 1.5rem;
+    background:linear-gradient(180deg,var(--sky-bottom) 0%, #0a0d18 100%);
+  }
+  .closing{
+    font-size:clamp(1.4rem,4.6vw,2.1rem);
+    line-height:2.1;
+    color:var(--ink);
+    max-width:20ch;
+    text-shadow:0 0 26px rgba(255,223,143,.2);
+  }
+  .credit{
+    margin-top:2.5rem;
+    font-size:.8rem;
+    letter-spacing:.35em;
+    color:#8a7d5c;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stars,.hint{animation:none;}
+    .col{transition:none;}
+    #liquid{transition:none;}
+  }
+
+  .no-js .pin{position:relative;height:auto;padding:4rem 0;overflow-x:auto;}
+  .no-js .col{opacity:1;transform:none;}
+</style>
+</head>
+<body class="no-js">
+
+  <section class="hero">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="moon" aria-hidden="true"></div>
+    <div class="mountains" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow">樂府歌行</p >
+      <h1>將進酒</h1>
+      <p class="byline">【唐】李白</p >
+      <p class="tagline">人生得意須盡歡，<br>莫使金樽空對月。</p >
+      <p class="hint">向下滾動，展開詩卷 ↓</p >
+    </div>
+  </section>
+
+  <section class="pin-wrap" id="pinWrap">
+    <div class="pin">
+      <p class="cup-label">舉杯</p >
+      <svg class="cup-wrap" viewBox="0 0 100 130" aria-hidden="true">
+        <defs>
+          <clipPath id="cupClip">
+            <path d="M18 20 L82 20 L74 100 Q50 118 26 100 Z"/>
+          </clipPath>
+        </defs>
+        <path d="M18 20 L82 20 L74 100 Q50 118 26 100 Z"
+              fill="none" stroke="#c9a24b" stroke-width="3"/>
+        <rect id="liquid" x="18" y="118" width="64" height="0"
+              fill="#d97a3f" clip-path="url(#cupClip)"/>
+        <line x1="10" y1="20" x2="90" y2="20" stroke="#c9a24b" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+
+      <div class="track" id="track">
+        <div class="col">君不見黃河之水天上來，奔流到海不復回。</div>
+        <div class="col">君不見高堂明鏡悲白髮，朝如青絲暮成雪。</div>
+        <div class="col">人生得意須盡歡，莫使金樽空對月。</div>
+        <div class="col">天生我材必有用，千金散盡還復來。</div>
+        <div class="col">烹羊宰牛且為樂，會須一飲三百杯。</div>
+        <div class="col gap">岑夫子，丹丘生，將進酒，杯莫停。</div>
+        <div class="col">與君歌一曲，請君為我傾耳聽。</div>
+        <div class="col gap">鐘鼓饌玉不足貴，但願長醉不復醒。</div>
+        <div class="col">古來聖賢皆寂寞，惟有飲者留其名。</div>
+        <div class="col">陳王昔時宴平樂，斗酒十千恣歡謔。</div>
+        <div class="col">主人何為言少錢，徑須沽取對君酌。</div>
+        <div class="col">五花馬、千金裘，呼兒將出換美酒，與爾同銷萬古愁。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="finale">
+    <p class="closing">五花馬、千金裘，<br>呼兒將出換美酒，<br>與爾同銷萬古愁。</p >
+    <p class="credit">《將進酒》 · 李白</p >
+  </section>
+
+<script>
+(function(){
+  document.body.classList.remove('no-js');
+
+  var pinWrap = document.getElementById('pinWrap');
+  var track   = document.getElementById('track');
+  var cols    = track.querySelectorAll('.col');
+  var liquid  = document.getElementById('liquid');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var trackWidth = 0, viewWidth = 0, scrollRange = 0;
+  var current = 0; // eased progress, smoothly trails the real scroll target
+
+  function measure(){
+    viewWidth  = window.innerWidth;
+    trackWidth = track.scrollWidth;
+    scrollRange = Math.max(trackWidth - viewWidth, 1);
+    pinWrap.style.height = (window.innerHeight + scrollRange) + 'px';
+  }
+
+  function targetProgress(){
+    var total = pinWrap.offsetHeight - window.innerHeight;
+    if(total <= 0) return 0;
+    var rect = pinWrap.getBoundingClientRect();
+    var scrolled = -rect.top;
+    return Math.min(Math.max(scrolled / total, 0), 1);
+  }
+
+  function apply(progress){
+    if(!reduced){
+      track.style.transform = 'translateX(-' + (progress * scrollRange) + 'px)';
+    }
+    var activeCount = Math.ceil(progress * cols.length);
+    cols.forEach(function(c, i){
+      c.classList.toggle('active', i < activeCount);
+    });
+    var maxLiquidHeight = 98;
+    var h = progress * maxLiquidHeight;
+    liquid.setAttribute('height', h);
+    liquid.setAttribute('y', 118 - h);
+  }
+
+  function loop(){
+    var target = targetProgress();
+    // ease current toward target for a smooth, momentum-like glide
+    current += (target - current) * 0.085;
+    if(Math.abs(target - current) < 0.0005) current = target;
+    apply(current);
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', measure, {passive:true});
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(measure);
+  }
+
+  measure();
+  if(reduced){
+    // no easing/translate needed, just react on scroll directly and cheaply
+    window.addEventListener('scroll', function(){ apply(targetProgress()); }, {passive:true});
+    apply(targetProgress());
+  } else {
+    requestAnimationFrame(loop);
+  }
+})();
+</script>
+</body>
+</html>
